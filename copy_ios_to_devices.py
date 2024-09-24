@@ -1,16 +1,18 @@
 from netmiko import ConnectHandler
-import logging
-logging.basicConfig(filename='test.log', level=logging.DEBUG)
-logger = logging.getLogger("netmiko")
+passwd = getpass.getpass("Enter the password: ")
+device_list = []
 for n in range (20,178):
-    net_connect = ConnectHandler(
-    device_type="cisco_ios",
-    host="10.10.10." + str(n),
-    username="xxx",
-    password="xxxxxx",
-    secret="xxxxx",
-    read_timeout_override=300
-    )
+    device = {
+        "device_type": "cisco_ios",
+        "host": "10.10.10." + str(n),
+        "username": "xxxx",
+        "password": passwd,
+        "secret": passwd # Enable password
+        "read_timeout_override": "300"
+    }
+    device_list.append(device)
+ for device in device_list:
+    connection = ConnectHandler(**device)
     list_inventory = ['WS-C2960+48TC-L', 
                       'WS-C2960-48PST-L',
                      ]
