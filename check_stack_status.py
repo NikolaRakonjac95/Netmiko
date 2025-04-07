@@ -10,23 +10,19 @@ def cisco_cli (parameters,commands):
     output_1 = output.split()
     output_2 = output_1[1:]
     if len(output_2) == 12:
-        output_3 = [output_2[0], output_2[5], output_2[6], output_2[11]]
-        if output_3[1] != "Ready" or output_3[3] != "Ready":
-            print("Stack status is BAD")
-        else:
-            print("Stack status is OK")
+        status = [output_2[5], output_2[11]]
     elif len(output_2) == 18:
-        output_3 = [output_2[0], output_2[5], output_2[6], output_2[11], output_2[12], output_2[17]]
-        if output_3[1] != "Ready" or output_3[3] != "Ready" or output_3[5] != "Ready":
-            print("Stack status is BAD")
-        else:
-            print("Stack status is OK")
+        status = [output_2[5], output_2[11], output_2[17]]
     elif len(output_2) == 24:
-        output_3 = [output_2[0], output_2[5], output_2[6], output_2[11], output_2[12], output_2[17], output_2[18], output_2[23]]
-        if output_3[1] != "Ready" or output_3[3] != "Ready" or output_3[5] != "Ready" or output_3[7] != "Ready":
-            print("Stack status is BAD")
-        else:
-            print("Stack status is OK")
+        status = [output_2[5], output_2[11], output_2[17], output_2[23]]
+        
+    for s in status:
+        if s != "Ready":
+            print("CRITICAL: Stack status is BAD")
+            sys.exit(2)
+
+    print("OK: Stack status is OK")
+    sys.exit(0)
 
 commands = ["show switch | begin -------"]
 
