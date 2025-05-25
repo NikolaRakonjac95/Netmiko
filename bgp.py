@@ -31,23 +31,14 @@ with open("description.txt", "w") as f:
                 
                 print (f"Connect to: {IP}")
 
-                output = net_connect.send_command("show running-config | section bgp")
-                with open("bgp_conf.txt", "w") as f:
-                    f.write(output)
-                with open("bgp_conf.txt") as f2:
-                    conf = f2.readlines()
-                    x= "IBGP_TUN_PRIORITY_3"
-                    y = "IBGP_TUN_PRIORITY_4"
-                    z = "IBGP_TUN_PRIORITY_2"
-                    d = "IBGP_TUN_PRIORITY_1"
-                    res = [i for i in conf if x in i ]
-                    res_2 = [i for i in conf if y in i]
-                    res_3 = [i for i in conf if z in i]
-                    res_4 = [i for i in conf if d in i]
-                    result_all = res + res_2 + res_3 + res_4
-                    start_char = "neighbor "
-                    end_char = " route-map"
-                    for line in result_all:
+                output = net_connect.send_command("show running-config | section bgp", use_textfsm=True)
+                output = output.splitlines()
+                x,y,z,d= "IBGP_TUN_PRIORITY_3", "IBGP_TUN_PRIORITY_4", "IBGP_TUN_PRIORITY_2", "IBGP_TUN_PRIORITY_1"
+                res, res_2, res_3, res_4 = [i for i in output if x in i ], [i for i in output if y in i], [i for i in output if z in i], [i for i in output if d in i]
+                result_all = res + res_2 + res_3 + res_4
+                start_char = "neighbor "
+                end_char = " route-map"
+                for line in result_all:
                         start_pos = line.find(start_char) + len(start_char)
                         end_pos = line.find(end_char, start_pos)
                         result = line[start_pos:end_pos]
