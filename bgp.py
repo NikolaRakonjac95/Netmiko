@@ -36,21 +36,22 @@ with open("description.txt", "w") as f:
                 x,y,z,d= "IBGP_TUN_PRIORITY_3", "IBGP_TUN_PRIORITY_4", "IBGP_TUN_PRIORITY_2", "IBGP_TUN_PRIORITY_1"
                 res, res_2, res_3, res_4 = [i for i in output if x in i ], [i for i in output if y in i], [i for i in output if z in i], [i for i in output if d in i]
                 result_all = res + res_2 + res_3 + res_4
-                start_char = "neighbor "
-                end_char = " route-map"
+                result_all_new = []
                 for line in result_all:
-                        start_pos = line.find(start_char) + len(start_char)
-                        end_pos = line.find(end_char, start_pos)
-                        result = line[start_pos:end_pos]
-                        commands = ["router bgp xxxxx",
+                     line = line.strip()
+                     if "in" in line:
+                          result_all_new.append(line)
+                start_char = "neighbor"
+                end_char = "route-map"
+                for line in result_all_new:
+                    start_pos = line.find(start_char) + len(start_char)
+                    end_pos = line.find(end_char)
+                    result = line[start_pos:end_pos].strip()
+                    commands = ["router bgp xxxxx",
                                    f"neighbor {result} password 7 xxxxxxxxxxxx"
                                    ]
-                        commands = "\n".join(commands)
-                        with open ("commands_for_bgp.txt", "w") as f:
-                            f.write(commands)
-                        with open ("commands_za_bgp.txt") as f2:
-                            commands_output = f2.readlines()
-                        output_bgp = net_connect.send_config_set(commands_output)
-                        print(output_bgp)
+                    output_bgp = net_connect.send_config_set(commands)
+                    output_bgp += net_connect.save_config()
+                    print(output_bgp)
 
                 net_connect.disconnect()
