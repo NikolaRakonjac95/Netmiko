@@ -9,5 +9,6 @@
 * cisco_concurent_sessions is the similar script as a previous one. Only change is in possibility to chose on how many devices we want to log in simultaneous.
 
 * In txt_fsm_iventory script I managed to find on which devices in network certain SFP module is present, using textfsm in order getting more granular output.
+* Txt_FSM is also usefull for extract some information from "show version" command, for example: hostname, uptime, version, hardware...
 
 * chack_stack_status is made to be used by Nagios server for monitoring stack status. This script covers stack with two, three and four switches.
