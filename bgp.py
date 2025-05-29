@@ -34,10 +34,10 @@ with open("description.txt", "w") as f:
                 output = net_connect.send_command("show running-config | section bgp", use_textfsm=True)
                 output = output.splitlines()
                 x,y,z,d= "IBGP_TUN_PRIORITY_3", "IBGP_TUN_PRIORITY_4", "IBGP_TUN_PRIORITY_2", "IBGP_TUN_PRIORITY_1"
-                res, res_2, res_3, res_4 = [i for i in output if x in i ], [i for i in output if y in i], [i for i in output if z in i], [i for i in output if d in i]
+                res, res_2, res_3, res_4 = [i for i in output if x in i ], [i for i in output if y in i], [i for i in output if z in i], [i for i in output if d in i] #filtering certain pieces of output
                 result_all = res + res_2 + res_3 + res_4
                 result_all_new = []
-                for line in result_all:
+                for line in result_all: #there are route map in and out assosieted with every bgp neighbor, so I want to filter only one line
                      line = line.strip()
                      if "in" in line:
                           result_all_new.append(line)
