@@ -1,14 +1,12 @@
 *bgp script helped me to push bgp password to over a 200 branch locations in WAN network for certain bgp neighbors, not to all. In this script I used some lines in bgp config in order to export certain piece of configuration and filter ip address of bgp neighbors to which I want to configure bgp password.
 
-*finding_config_lines script helped me to see on which device I need to put new tacacs commands. I want add new tacacs commands at just certain routers model as you can see in the script.
+*In copying_ios_to_different_type_of_devices.py I provided code that iterates over more than one hundred switches, finding right model and copy ios to them using thread in order to make paralel sessions.
 
-*In copy_ios_to_devices script I provide code that iterates over more than one hundred switches, finding right model and copy ios to them.
-
-* access_to_many_devices simultaneous script shows how to execute multiple threads concurrently in order to finish some job on multiple cisco devices faster than accessing to devices one per one.
-
-* cisco_concurent_sessions is the similar script as a previous one. Only change is in possibility to chose on how many devices we want to log in simultaneous.
-
-* In txt_fsm_iventory script I managed to find on which devices in network certain SFP module is present, using textfsm in order getting more granular output.
+* In sfp_inventory.py I managed to find on which devices in network certain SFP module is present, using textfsm in order getting more granular output.
 * Txt_FSM is also usefull for extract some information from "show version" command, for example: hostname, uptime, version, hardware...
 
 * chack_stack_status is made to be used by Nagios server for monitoring stack status. This script covers stack with two, three and four switches.
+
+* copy_ios_to_device.py helped me to copy IOS on more than 200 routers in WAN
+
+* upgrade.py serves to perform md5 checksum check and then boot new ios image to device
