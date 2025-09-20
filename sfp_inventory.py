@@ -1,25 +1,27 @@
 from netmiko import ConnectHandler
 import json
 
-def cisco_cli (parameters,commands):
-    net_connect = ConnectHandler(**parameters)
+def cisco_cli (parametri,komande):
+    net_connect = ConnectHandler(**parametri)
     net_connect.enable
-    for cmd in commands:
+    for cmd in komande:
         output=net_connect.send_command(cmd, use_textfsm=True)
         output_1=json.dumps(output,indent=10)
     net_connect.disconnect
     print(output_1)
     sfp_module = [n for n in output if n["pid"].startswith("M125")]
-    print(parameters["host"], "\n",sfp_module)
+    print(f"Uredjaj {parametri['host']}")
+    for n in sfp_module:
+        print(n["pid"], n["sn"], "\n")
 
 
-commands = ["terminal length 0", "show inventory"]
-for n in range (101,150):
-    parameters = {
+komande = ["terminal length 0", "show inventory"]
+for n in range (x,y):
+    parametri = {
         "device_type":"cisco_ios",
         "username":"",
         "password":"",
-        "host":"10.35.3." + str(n),
+        "host":"10.10.10." + str(n),
         "secret":""
     }
-    cisco_cli(parameters,commands)
+    cisco_cli(parametri,komande)

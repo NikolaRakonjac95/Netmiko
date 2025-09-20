@@ -1,5 +1,6 @@
 from netmiko import ConnectHandler
 import argparse
+import sys
 
 def cisco_cli (parameters,commands):
     net_connect = ConnectHandler(**parameters)

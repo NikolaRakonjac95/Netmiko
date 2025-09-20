@@ -33,7 +33,7 @@ def upgrade (ipaddr):
         if "Address or name of remote host" in output:
             output += net_connect.send_command_timing("192.168.10.20\n")
         if "Source filename" in output:
-            output += net_connect.send_command_timing("<ios file>\n")
+            output += net_connect.send_command_timing("<ios image>\n")
         if "Destination filename" in output:
             output += net_connect.send_command_timing("\n")
         print(output)
