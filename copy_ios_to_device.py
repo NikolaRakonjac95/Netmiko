@@ -5,12 +5,17 @@ from netmiko.exceptions import SSHException
 import threading
 from getpass import getpass
 
-devices = ["10.10.10.1",
-           "10.10.11.1",
-           "..."
-]
+devices = []
 
-passwd = getpass.getpass("Enter the password: ")
+with open( "exp.txt", "r" ) as devices_file:
+    for line in devices_file:
+        devices.append(line)
+             
+print ('\n----- devices --------------------------')
+print( devices )
+
+passwd = getpass("Enter the password: ")
+
 def upgrade (ipaddr):
     try:
         net_connect = ConnectHandler(
@@ -34,16 +39,14 @@ def upgrade (ipaddr):
         print(output)
         net_connect.disconnect()
         print("------------------------------")
-    except AuthenticationException as f:
-        print(f"Authentication error: {f}")
-    except NetMikoTimeoutException: 
-        print("Timeout")
-    except EOFError:
-        print("EOF error")
-    except SSHException:
-        print("Problem with ssh connection")
+    except (AuthenticationException):
+        print ('Authentication failed: ' + ipaddr)
+    except (NetMikoTimeoutException):
+        print ('Timeout expired: ' + ipaddr)
+    except (SSHException):
+        print ('SSH error. Check if ssh enabled on device ' + ipaddr)
     except Exception as unknown_error:
-        print(f"Unexpecet error: {unknown_error}")
+        print ('Unknown error: ' + str(unknown_error))
     return
 #=============================================================================================
 config_threads_list = []
